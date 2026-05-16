@@ -1,4 +1,4 @@
-from domain.models import PersonalImportingCase, TraditionalImportingCase
+from src.domain.models import PersonalImportingCase, TraditionalImportingCase
 
 
 class ImportingCostCalculator:

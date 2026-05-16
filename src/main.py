@@ -1,9 +1,9 @@
 import argparse
 import os
 
-from adapters.cli import CliApp
-from application.use_cases import CalculateAllCasesUseCase, CalculateSpecificCaseUseCase
-from domain.services import ImportingCostCalculator
+from src.adapters.cli import CliApp
+from src.application.use_cases import CalculateAllCasesUseCase, CalculateSpecificCaseUseCase
+from src.domain.services import ImportingCostCalculator
 
 
 DEFAULT_DOLLAR: float = 5.0
