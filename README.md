@@ -156,7 +156,7 @@ import_cost_calculator/
 Run the test suite with:
 
 ```zsh
-uv run pytest
+uv run -m pytest
 ```
 
 Or:
