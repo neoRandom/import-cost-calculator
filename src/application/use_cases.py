@@ -18,7 +18,7 @@ class CalculateAllCasesUseCase(CalculateUseCase[TraditionalImportingCase]):
 
     def execute(self, case: TraditionalImportingCase) -> CalculationResult:
         return CalculationResult(
-            raw_cost=self._calculator.dolar_to_reais(case.value),
+            raw_cost=self._calculator.dollar_to_reais(case.value),
             traditional_importing_cost=self._calculator.calculate_traditional_importing_cost(case),
             personal_declaring_cost=self._calculator.calculate_personal_importing_cost(
                 PersonalImportingCase(value=case.value, is_declaring=True, is_clean=False)
@@ -38,7 +38,7 @@ class CalculateSpecificCaseUseCase(CalculateUseCase[PersonalImportingCase]):
 
     def execute(self, case: PersonalImportingCase) -> CalculationResult:
         return CalculationResult(
-            raw_cost=self._calculator.dolar_to_reais(case.value),
+            raw_cost=self._calculator.dollar_to_reais(case.value),
             traditional_importing_cost=self._calculator.calculate_traditional_importing_cost(TraditionalImportingCase(value=case.value)),
             personal_declaring_cost=self._calculator.calculate_personal_importing_cost(case),
             personal_clean_cost=0.0,

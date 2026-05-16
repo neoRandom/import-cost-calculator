@@ -3,7 +3,7 @@ from domain.models import PersonalImportingCase, TraditionalImportingCase
 from domain.services import ImportingCostCalculator
 
 
-DOLAR: float = 5.0
+DOLLAR: float = 5.0
 QUOTA: float = 1000.0
 
 
@@ -20,7 +20,7 @@ def read_yes_no(prompt: str) -> bool:
 
 
 def main():
-    calculator = ImportingCostCalculator(DOLAR, QUOTA)
+    calculator = ImportingCostCalculator(DOLLAR, QUOTA)
     all_cases_use_case = CalculateAllCasesUseCase(calculator)
     specific_case_use_case = CalculateSpecificCaseUseCase(calculator)
 
