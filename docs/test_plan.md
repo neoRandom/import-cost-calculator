@@ -14,9 +14,9 @@ Validate:
 
 ---
 
-## 1) main.py — configuration loading
+## 1) `main.py` — configuration loading
 
-### Cases
+#### Cases
 | Test | Input | Expected |
 |---|---|---|
 | CLI overrides env and default | `--dollar 6.0 --quota 1500`, env set | CLI values used |
@@ -26,25 +26,25 @@ Validate:
 | Invalid env value | `DOLLAR_RATE=abc` | `ValueError` |
 | Invalid CLI value | `--quota abc` | argparse error / exit |
 
-### Notes
-- Mock `os.getenv`
-- Mock `argparse.ArgumentParser.parse_args`
+> Notes:
+> - Mock `os.getenv`
+> - Mock `argparse.ArgumentParser.parse_args`
 
 ---
 
-## 2) services.py — business rules
+## 2) `services.py` — business rules
 
-### `to_reais`
+#### `dollar_to_reais`
 | Test | Input | Expected |
 |---|---|---|
 | Converts dollars to reais | `10`, rate `5.0` | `50.0` |
 
-### `calculate_traditional_importing_cost`
+#### `calculate_traditional_importing_cost`
 | Test | Input | Expected |
 |---|---|---|
 | Doubles converted value | `10`, rate `5.0` | `100.0` |
 
-### `calculate_personal_importing_cost`
+#### `calculate_personal_importing_cost`
 Use quota `1000.0`, rate `5.0`.
 
 | Case | value | declaring | clean | Expected |
@@ -57,7 +57,7 @@ Use quota `1000.0`, rate `5.0`.
 | Above quota, not declaring, not clean | 1200 | False | False | base + 100% of excess |
 | Exactly at quota | 1000 | any | any | base only |
 
-### Important rule checks
+#### Important rule checks
 - Declaring always applies **50%** tax on amount above quota
 - Not declaring and not clean applies **100%** tax on amount above quota
 - Clean and not declaring applies **0%**
@@ -65,28 +65,28 @@ Use quota `1000.0`, rate `5.0`.
 
 ---
 
-## 3) use_cases.py — application layer
+## 3) `use_cases.py` — application layer
 
-### `CalculateAllCasesUseCase.execute`
+#### `CalculateAllCasesUseCase.execute`
 | Test | Input | Expected |
 |---|---|---|
 | Returns all calculated variants | value `1200` | all fields populated correctly |
 
-### `CalculateSpecificCaseUseCase.execute`
+#### `CalculateSpecificCaseUseCase.execute`
 | Test | Input | Expected |
 |---|---|---|
 | Returns specific case result | `PersonalImportingCase(...)` | raw, traditional, and personal cost correct |
 | Preserves case flags | any case | uses passed `is_declaring` and `is_clean` |
 
-### Notes
-- Mock `ImportingCostCalculator`
-- Verify calls and return mapping
+> Notes:
+> - Mock `ImportingCostCalculator`
+> - Verify calls and return mapping
 
 ---
 
-## 4) cli.py — interactive behavior
+## 4) `cli.py` — interactive behavior
 
-### Cases
+#### Cases
 | Test | Input sequence | Expected |
 |---|---|---|
 | Show all cases flow | `1`, value | calls all-cases use case and prints result |
@@ -95,32 +95,15 @@ Use quota `1000.0`, rate `5.0`.
 | Invalid float retry | `2`, `abc`, `100` | reprompts until valid |
 | Yes/no parsing | `yes` / `no` | maps only `"yes"` to `True` |
 
-### Notes
-- Mock `input`
-- Capture `print`
-- Mock both use cases
+> Notes:
+> - Mock `input`
+> - Capture `print`
+> - Mock both use cases
 
 ---
 
-## 5) Suggested priority
+## Priorities
 
-### Must-have
-- `calculate_personal_importing_cost`
-- `load_config`
-- `CalculateAllCasesUseCase.execute`
-
-### Nice-to-have
 - CLI flow tests
 - Invalid input tests
 - Edge cases around exact quota
-
----
-
-## 6) Acceptance criteria
-- All domain rules pass
-- Configuration precedence is correct:
-  1. CLI arguments
-  2. environment variables
-  3. defaults
-- CLI runs without crashing for valid input
-- Invalid input is handled predictably
