@@ -13,9 +13,15 @@ class ImportingCostCalculator:
         return self.dollar_to_reais(case.value) * 2
 
     def calculate_personal_importing_cost(self, case: PersonalImportingCase) -> float:
-        if case.is_declaring:
-            return self.dollar_to_reais(case.value) + (self.dollar_to_reais(case.value - self.quota_value) * 0.5)
-        elif case.is_clean:
-            return self.dollar_to_reais(case.value)
+        base_cost = self.dollar_to_reais(case.value)
+        taxable_amount = max(0.0, case.value - self.quota_value)
 
-        return self.dollar_to_reais(case.value) + self.dollar_to_reais(case.value - self.quota_value)
+        if case.is_declaring:
+            tax_rate = 0.5
+        elif case.is_clean:
+            tax_rate = 0.0
+        else:
+            tax_rate = 1.0
+
+        tax = self.dollar_to_reais(taxable_amount) * tax_rate
+        return base_cost + tax
