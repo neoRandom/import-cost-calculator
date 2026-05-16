@@ -128,6 +128,8 @@ The project uses a **src layout** to keep application code isolated from tests a
 - **Fast failure on bad input:** invalid values are rejected early to prevent silent calculation errors.
 - **Small, testable components:** each layer can be mocked or tested in isolation.
 
+> Note: You can also read a bit of what I've learned [here](/docs/record.md).
+
 ## Folder Structure
 
 ```text
