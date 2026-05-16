@@ -94,7 +94,11 @@ uv run -m src.main
 
 ## Architecture / Engineering / Structure
 
-The project uses a **src layout** to keep application code isolated from tests and tooling.
+The project's architecture is based on Hexagonal Architecture to keep business logic isolated from the cli, tests and tooling.
+
+It's understood that, for the scope of the project, such architecture is overengineering, thus the main goal was learning more and getting used to with it.
+
+Also, one of the main characteristics of HA is being lighter than Clean Architecture while maintaining business logic isolated, and applying Dependency Inversion and Single Responsibility principles, so it applies good practices with lower requirements, being a great choice for fast (but high-quality) development.
 
 ### Layers
 
