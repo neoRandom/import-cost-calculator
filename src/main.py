@@ -6,9 +6,6 @@ DOLAR: float = 5.0
 QUOTA: float = 1000.0
 
 
-
-
-
 def main():
     calculator = ImportTaxCalculator(DOLAR, QUOTA)
 
@@ -27,3 +24,7 @@ def main():
         print(f"The total cost of the personal import is: R$ {total_cost:.2f}")
     else:
         print("Invalid import type. Please enter 'T' or 'P'.")
+
+
+if __name__ == "__main__":
+    main()
