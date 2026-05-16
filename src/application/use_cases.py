@@ -1,10 +1,20 @@
+from dataclasses import dataclass
 from typing import Generic, TypeVar
 
 from src.domain.services import ImportingCostCalculator
-from src.domain.models import CalculationResult, ImportingCase, PersonalImportingCase, TraditionalImportingCase
+from src.domain.models import ImportingCase, PersonalImportingCase, TraditionalImportingCase
 
 
 T = TypeVar("T", bound=ImportingCase)
+
+
+@dataclass(frozen=True)
+class CalculationResult:
+    raw_cost: float
+    traditional_importing_cost: float
+    personal_declaring_cost: float
+    personal_clean_cost: float
+    personal_non_declaring_non_clean_cost: float
 
 
 class CalculateUseCase(Generic[T]):
